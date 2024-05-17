@@ -1,0 +1,22 @@
+.trial {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.trial:Hover {
+    background-color: rgb(247, 243, 236);
+}
+.title {
+    color: black;
+}
+
+.text {
+    color: black;
+    text-align: left;
+}
+

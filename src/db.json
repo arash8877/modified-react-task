@@ -1,0 +1,25 @@
+{
+  "userList": [
+    {
+      "id": 1,
+      "name": "John",
+      "email": "john@email.com",
+      "password": "123456",
+      "dob": "20-20-2011"
+    },
+    {
+      "id": 2,
+      "name": "peter",
+      "email": "peter@email.com",
+      "password": "123456",
+      "dob": "19-19-2011"
+    },
+    {
+      "id": 3,
+      "name": "Alex",
+      "email": "alex@email.com",
+      "password": "123456",
+      "dob": "18-18-2011"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10rem;
+    gap: 2rem;
+}
+
+
+.link {
+    width: 6rem;
+    height: 3rem;
+    background-color: blue;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.link:hover {
+    background-color: gray;
+}
+
+.link:active {
+    transform: scale(0.9);
+}
+
+.link a {
+    color: white;
+}
