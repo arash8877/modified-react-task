@@ -9,7 +9,6 @@ const Trials = () => {
   const [isGridView, setIsGridView] = useState(true);
   const { name, getProfileInfo } = useContext(AuthContext);
   const { trials } = useContext(TrialContext);
-  console.log(trials);
   // useEffect(() => {
   //   getProfileInfo();
   // }, [getProfileInfo]);

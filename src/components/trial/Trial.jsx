@@ -3,7 +3,6 @@ import styles from "./Trial.module.css";
 import { Link } from "react-router-dom";
 
 const Trial = ({ trial }) => {
-  console.log(trial);
   const { protocolSection } = trial;
   const {
     identificationModule,

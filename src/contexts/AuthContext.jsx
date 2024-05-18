@@ -2,6 +2,7 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/userList");
+        const response = await axios.get("http://localhost:8000/userList");
         setUsers(response.data);
       } catch (error) {
         console.error("Failed to fetch users:", error);
@@ -48,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       setError("");
       setUserId(user.id);
       setName(user.name);
-      localStorage.setItem("user", JSON.stringify(user));
+      // localStorage.setItem("user", JSON.stringify(user));
       navigate("trials");
     } else {
       setError("Invalid email or password!");
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/userList", newUser);
+      const response = await axios.post("http://localhost:8000/userList", newUser);
       setUsers((prevUsers) => [...prevUsers, response.data]);
       localStorage.setItem("user", JSON.stringify(response.data));
       navigate("login");
