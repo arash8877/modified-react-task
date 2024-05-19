@@ -9,8 +9,7 @@ import { FavoriteContext } from "../../contexts/FavContext";
 
 const TrialDetails = () => {
   const { getTrial, trial } = useContext(TrialContext);
-  const { favorites, addFavorite, removeFavorite } =
-    useContext(FavoriteContext);
+  const { favorites, addFavorite, removeFavorite } = useContext(AuthContext);
   const navigate = useNavigate();
   const { nctId } = useParams();
   const { name, getProfileInfo } = useContext(AuthContext);
@@ -19,7 +18,6 @@ const TrialDetails = () => {
   // if (Object.keys(trial).length === 0) {
   //   navigate("/");
   // }
-
 
   const {
     identificationModule,
@@ -38,9 +36,10 @@ const TrialDetails = () => {
   const city = location?.city;
   const state = location?.state;
 
-  const isFavorite = favorites.some(
-    (favorite) => favorite.protocolSection.identificationModule.nctId === nctId
-  );
+  // const isFavorite = favorites.some(
+  //   (favorite) => favorite.protocolSection.identificationModule.nctId === nctId
+  // );
+  const isFavorite = false;
   const toggleFavorite = () => {
     if (isFavorite) {
       removeFavorite(nctId);
@@ -51,7 +50,7 @@ const TrialDetails = () => {
 
   useEffect(() => {
     getTrial(nctId);
-  }, [nctId, getTrial]);
+  }, [nctId]);
 
   // useEffect(() => {
   //   getProfileInfo();

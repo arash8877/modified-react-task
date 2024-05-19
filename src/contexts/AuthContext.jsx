@@ -1,4 +1,3 @@
-
 import { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -49,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       setError("");
       setUserId(user.id);
       setName(user.name);
-      // localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("trials");
     } else {
       setError("Invalid email or password!");
@@ -80,7 +79,10 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/userList", newUser);
+      const response = await axios.post(
+        "http://localhost:8000/userList",
+        newUser
+      );
       setUsers((prevUsers) => [...prevUsers, response.data]);
       localStorage.setItem("user", JSON.stringify(response.data));
       navigate("login");
@@ -97,12 +99,71 @@ export const AuthProvider = ({ children }) => {
     navigate("login");
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ login, userId, error, register, name, getProfileInfo, logout }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  //////////////////////////////Favorites///////////////////////////////
 
+  const currentUser = users.find((user) => user.id === userId);
+
+  const [favorites, setFavorites] = useState(() => {
+    return currentUser ? currentUser.favorites : [];
+  });
+
+  // const addFavorite = (trial) => {
+  //   setFavorites((prevFavorites) => [...prevFavorites, trial]);
+  // };
+
+  const addFavorite = async (trial) => {
+    try {
+      const updatedFavorites = [...favorites, trial];
+      const updatedUser = { ...currentUser, favorites: updatedFavorites };
+      const updatedUsers = users.map((user) =>
+        user.id === userId ? updatedUser : user
+      );
+      console.log(updatedUsers);
+      await axios.put(`http://localhost:8000/userList/${userId}`, updatedUser);
+      setUsers(updatedUsers);
+      setFavorites(updatedFavorites);
+    } catch (error) {
+      console.error("Failed to add favorite:", error);
+    }
+  };
+
+  const removeFavorite = async (nctId) => {
+    try {
+      const updatedFavorites = favorites.filter(
+        (trial) => trial.protocolSection.identificationModule.nctId !== nctId
+      );
+      const updatedUser = { ...currentUser, favorites: updatedFavorites };
+      console.log(updatedUsers);
+      const updatedUsers = users.map((user) =>
+        user.id === userId ? updatedUser : user
+      );
+      await axios.put(`http://localhost:8000/userList/${userId}`, updatedUser);
+      setUsers(updatedUsers);
+      setFavorites(updatedFavorites);
+    } catch (error) {
+      console.error("Failed to remove favorite:", error);
+    }
+  };
+  console.log(currentUser);
+  // console.log(favorites);
+  useEffect(() => {
+    if (currentUser) {
+      setFavorites(currentUser.favorites);
+    }
+  }, [userId, users]);
+
+  const value = {
+    login,
+    userId,
+    error,
+    register,
+    name,
+    getProfileInfo,
+    logout,
+    addFavorite,
+    removeFavorite,
+    favorites,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

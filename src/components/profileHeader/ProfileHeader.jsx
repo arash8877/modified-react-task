@@ -2,21 +2,21 @@ import React, { useContext, useEffect } from "react";
 import styles from "./ProfileHeader.module.css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import {FavoriteContext} from "../../contexts/FavContext"
+import { FavoriteContext } from "../../contexts/FavContext";
 
 const ProfileHeader = () => {
-  const { name, getProfileInfo,logout } = useContext(AuthContext);
-    const { clearFavorites } = useContext(FavoriteContext);
+  const { name, getProfileInfo, logout } = useContext(AuthContext);
+
+  // const { clearFavorites } = useContext(FavoriteContext);
+  
   const handleLogout = () => {
-    console.log("handleLogout");
     logout();
-    clearFavorites();
+    // clearFavorites();
   };
 
   useEffect(() => {
     getProfileInfo();
   }, [getProfileInfo]);
-
 
   return (
     <div className={styles.header}>
@@ -31,7 +31,9 @@ const ProfileHeader = () => {
         <p className={styles.text}>Hi, {name}</p>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.button} onClick={() => handleLogout()}>Logout</button>
+        <button className={styles.button} onClick={() => handleLogout()}>
+          Logout
+        </button>
         <Link to="/trials">
           <button className={styles.button}>Go to Trials</button>
         </Link>
